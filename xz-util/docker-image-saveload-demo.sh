@@ -29,7 +29,10 @@ cat xxx | xargs -P0 -i{x} /usr/bin/bash -c 'docker pull '"'"{x}"'"' ; docker sav
 cat xxx | xargs -P0 -i{x} /usr/bin/bash -c 'docker pull '"'"{x}"'"' ; mkdir -p .../xxxx/"$(dirname '"'"{x}"'"')" ; docker save '"'"{x}"'"' |  xz -T0 --best > .../xxxx/'"'"{x}"'"'.tar.xz'
 
 # load image(s)
-cd .../xxxx ; ls *.tar.xz | xargs -P0 -i{x} /usr/bin/bash -c 'xz -d '"'"{x}"'"' --stdout | docker load'
+cd .../xxxx ; find -name \*.tar.xz -type f | xargs -P0 -i{x} /usr/bin/bash -c 'xz -d '"'"{x}"'"' --stdout | docker load'
+
+# may be ...
+cat xxx | grep -Ev ^\#\|^\$ | xargs -P0 -i{x} /usr/bin/bash -c 'docker pull '"'"{x}"'"' ; mkdir -p .../xxxx/"$(dirname '"'"{x}"'"')" ; docker save '"'"{x}"'"' |  xz -T0 --best > .../xxxx/'"'"{x}"'"'.tar.xz'
 
 ### images witten in xxx file and back bag will out to some dir ;
 ### file name is always not include docker.io or swr.cn-east-2.myhuaweicloud.com/kuboard etc. ;
